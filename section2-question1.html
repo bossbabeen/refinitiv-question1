@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Section2 Question1</title>
+    <style>
+        p {
+            margin: 0px;
+        }
+
+        .input-number {
+            width: 200px;
+            min-width: 200px;
+            height: 600px;
+            border: 2px solid black;
+        }
+
+        .input-number input {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .dropdown-check {
+            flex-grow: 1;
+            border: 2px solid black;
+            height: 600px;
+            min-width: 100px;
+        }
+
+        .result {
+            width: 300px;
+            height: 600px;
+            border: 2px solid black;
+            min-width: 300px;
+        }
+
+        @media screen and (max-width: 600px) {
+            body {
+                overflow: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div style="display: flex; flex-direction: row;">
+        <div class="input-number">
+            <input id="user-input" type="number" onchange="onChangeInput()">
+        </div>
+        <div class="dropdown-check">
+            <select id="dropdown" onchange="onChangeInput()">
+                <option selected value="isPrime">isPrime</option>
+                <option value="isFibonacci">isFibonacci</option>
+            </select>
+        </div>
+        <div class="result">
+            <p id="resultCal"></p>
+        </div>
+    </div>
+    <script>
+        function onChangeInput() {
+            var result = false;
+            var inputNumber = document.getElementById('user-input').value;
+            if (inputNumber != "" && inputNumber != null) {
+                inputNumber = checkInputNumber(inputNumber)
+                if (document.getElementById('dropdown').value == 'isPrime') {
+                    result = isPrime(inputNumber);
+                } else {
+                    result = isFibonacci(inputNumber)
+                }
+            }
+            document.getElementById('resultCal').innerHTML = result;
+        }
+        function isPrime(inputNumber) {
+            if (inputNumber == 0 || inputNumber == 1) {
+                return false;
+            }
+            var denominator = 2;
+            while ((inputNumber != denominator) && (inputNumber % denominator != 0)) {
+                denominator++
+            }
+            if (denominator == inputNumber) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function isFibonacci(inputNumber) {
+            if (inputNumber == 0) {
+                return true;
+            }
+            var fiboNumber = 1;
+            var oldFibonacciNumber = 1
+            var storeOldFibonacciNumber;
+            while (fiboNumber < inputNumber) {
+                storeOldFibonacciNumber = fiboNumber
+                fiboNumber = fiboNumber + oldFibonacciNumber
+                oldFibonacciNumber = storeOldFibonacciNumber
+            }
+            if (fiboNumber == inputNumber) {
+                return true;
+            } else {
+                return false
+            }
+        }
+
+        function checkInputNumber(inputNumber) {
+            if (inputNumber < 0) {
+                inputNumber = 1;
+            } else if (!Number.isInteger(inputNumber)) {
+                inputNumber = Math.round(inputNumber);
+            }
+            document.getElementById('user-input').value = inputNumber;
+            return inputNumber;
+        }
+    </script>
+    </div>
+</body>
+
+</html>
